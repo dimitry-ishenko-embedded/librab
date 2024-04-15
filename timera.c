@@ -32,7 +32,7 @@ static void isr_tima() _critical _interrupt
 
 void tima_init() _sdcccall
 {
-    ivt_intern_isr(INT_TIMERA, isr_tima);
+    ivt_intern_isr(INT_TIMA, isr_tima);
     TACR = (TACS |= INT_PRIO1);
 }
 

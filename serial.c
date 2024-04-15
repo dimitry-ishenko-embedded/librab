@@ -154,7 +154,7 @@ int sera_open(dword baud) _sdcccall
     word div = get_div(baud);
     if (div > 255) return FAIL;
 
-    ivt_intern_isr(INT_SERIALA, &isr_sera);
+    ivt_intern_isr(INT_SERA, &isr_sera);
 
     SACR = SA_PC_IN | SA_8BIT | INT_PRIO1;
     TAT4R = div;
@@ -218,7 +218,7 @@ int serb_open(dword baud) _sdcccall
     word div = get_div(baud);
     if (div > 255) return FAIL;
 
-    ivt_intern_isr(INT_SERIALB, &isr_serb);
+    ivt_intern_isr(INT_SERB, &isr_serb);
 
     SBCR = SB_PC_IN | SB_8BIT | INT_PRIO1;
     TAT5R = div;

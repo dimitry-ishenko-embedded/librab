@@ -12,18 +12,18 @@
 
 enum
 {
-    INT_PERIODIC= 0x00,
-    INT_TIMERA  = 0x0a,
-    INT_TIMERB  = 0x0b,
-    INT_SERIALA = 0x0c,
-    INT_SERIALB = 0x0d,
-    INT_SERIALC = 0x0e,
-    INT_SERIALD = 0x0f,
-    INT_SERIALE = 0x1c,
-    INT_SERIALF = 0x1d,
+    INT_PERIOD = 0x00,
+    INT_TIMA = 0x0a,
+    INT_TIMB = 0x0b,
+    INT_SERA = 0x0c,
+    INT_SERB = 0x0d,
+    INT_SERC = 0x0e,
+    INT_SERD = 0x0f,
+    INT_SERE = 0x1c,
+    INT_SERF = 0x1d,
 
-    EXTERN0     = 0x00,
-    EXTERN1     = 0x01,
+    INT_EXT0 = 0x00,
+    INT_EXT1 = 0x01,
 };
 
 int ivt_intern_isr(byte num, void *isr) _sdcccall;

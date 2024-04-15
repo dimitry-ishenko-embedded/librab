@@ -20,7 +20,7 @@ byte _at (0xdffa) div_19200;
 static byte _at (0xdffb) tic;
 static byte _at (0xdffc) toc;
 
-static void isr_periodic() _naked
+static void isr_period() _naked
 {
 _asm
     push af
@@ -135,7 +135,7 @@ void board_init() _sdcccall
     TACSR = TACSS = TA_CLOCK_ENABLE;
 
     tic = toc = msec_count = 0;
-    ivt_intern_isr(INT_PERIODIC, &isr_periodic);
+    ivt_intern_isr(INT_PERIOD, &isr_period);
     GCSR = (GCSS |= INT_PRIO3);
 
     __asm__("ipset 0");
