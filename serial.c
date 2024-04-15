@@ -203,14 +203,8 @@ void sera_send(const void *data, word size) _sdcccall { send(&sera, data, size);
 void sera_puts(const char *s) _sdcccall { send(&sera, (byte *)s, strlen(s)); }
 
 int  sera_getc(int timeout) _sdcccall { return getc(&sera, timeout); }
-word sera_recv(void *data, word size, int timeout) _sdcccall
-{
-    return recv(&sera, data, size, timeout);
-}
-int  sera_recv_all(void *data, word size, int timeout) _sdcccall
-{
-    return sera_recv(data, size, timeout) == size ? OK : TIMEOUT;
-}
+word sera_recv(void *data, word size, int timeout) _sdcccall { return recv(&sera, data, size, timeout); }
+int  sera_recv_all(void *data, word size, int timeout) _sdcccall { return sera_recv(data, size, timeout) == size ? OK : TIMEOUT; }
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -234,11 +228,5 @@ void serb_send(const void *data, word size) _sdcccall { send(&serb, data, size);
 void serb_puts(const char *s) _sdcccall { send(&serb, (byte *)s, strlen(s)); }
 
 int  serb_getc(int timeout) _sdcccall { return getc(&serb, timeout); }
-word serb_recv(void *data, word size, int timeout) _sdcccall
-{
-    return recv(&serb, data, size, timeout);
-}
-int  serb_recv_all(void *data, word size, int timeout) _sdcccall
-{
-    return serb_recv(data, size, timeout) == size ? OK : TIMEOUT;
-}
+word serb_recv(void *data, word size, int timeout) _sdcccall { return recv(&serb, data, size, timeout); }
+int  serb_recv_all(void *data, word size, int timeout) _sdcccall { return serb_recv(data, size, timeout) == size ? OK : TIMEOUT; }
