@@ -294,7 +294,7 @@ int sere_open(dword baud)
 
     ivt_intern_isr(INT_SERE, &isr_sere);
 
-    SECR = SB_IN_PC | SB_8BIT | INT_PRIO1;
+    SECR = SE_IN_PG7 | SE_8BIT | INT_PRIO1;
     TAT2R = div;
 
     return OK;
