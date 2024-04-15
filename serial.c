@@ -61,14 +61,21 @@ static int getc(serial *ctx, int timeout)
     {
         word start = msec_count;
         word end = start + timeout;
+        word count; // intermediate variable for "atomic" comparisons below
 
         if (end < start) do
+        {
             if (ctx->rx_out != ctx->rx_in) return get1(ctx);
-        while (msec_count >= start);
+            count = msec_count;
+        }
+        while (count >= start);
 
         do
+        {
             if (ctx->rx_out != ctx->rx_in) return get1(ctx);
-        while (msec_count < end);
+            count = msec_count;
+        }
+        while (count < end);
 
         return TIMEOUT;
     }
@@ -98,6 +105,7 @@ static word recv(serial *ctx, byte *data, word max_size, int timeout)
     {
         word start = msec_count;
         word end = start + timeout;
+        word count; // intermediate variable for "atomic" comparisons below
 
         byte *p = data, *e = p + max_size;
 
@@ -106,21 +114,27 @@ static word recv(serial *ctx, byte *data, word max_size, int timeout)
             for (; p != e; ++p, ++n)
             {
                 while (ctx->rx_out == ctx->rx_in)
-                    if (msec_count < start) goto done1;
+                {
+                    count = msec_count;
+                    if (count < start) goto done_1;
+                }
                 *p = get1(ctx);
             }
+        done_1:;
         }
 
-done1:
         for (; p != e; ++p, ++n)
         {
             while (ctx->rx_out == ctx->rx_in)
-                if (msec_count >= end) goto done2;
+            {
+                count = msec_count;
+                if (count >= end) goto done_2;
+            }
             *p = get1(ctx);
         }
+        done_2:;
     }
 
-done2:
     return n;
 }
 
