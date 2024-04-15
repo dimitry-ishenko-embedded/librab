@@ -1,6 +1,6 @@
 ####################
-## rabbit
-add_library(rabbit OBJECT
+## rab
+add_library(rab OBJECT
     board.c board.h
     ivt.c ivt.h
     reg.c reg.h
@@ -8,7 +8,7 @@ add_library(rabbit OBJECT
     timera.c timera.h
     types.h
 )
-target_include_directories(rabbit INTERFACE .)
+target_include_directories(rab INTERFACE .)
 
 ####################
 ## crt0
