@@ -5,7 +5,6 @@ add_library(rab OBJECT
     ivt.c ivt.h
     reg.c reg.h
     serial.c serial.h
-    timera.c timera.h
     types.h
 )
 target_include_directories(rab INTERFACE .)

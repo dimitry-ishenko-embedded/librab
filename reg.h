@@ -211,6 +211,14 @@ enum // TACSR
 {
     TA_CLOCK_DISABLE = 0x00,
     TA_CLOCK_ENABLE = 0x01,
+
+    TA1_INT_ENABLE = 0x02,
+    TA2_INT_ENABLE = 0x04,
+    TA3_INT_ENABLE = 0x08,
+    TA4_INT_ENABLE = 0x10,
+    TA5_INT_ENABLE = 0x20,
+    TA6_INT_ENABLE = 0x40,
+    TA7_INT_ENABLE = 0x80,
 };
 
 enum // TAPR
