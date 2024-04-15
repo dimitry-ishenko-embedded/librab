@@ -23,14 +23,12 @@ typedef struct
 
     byte rx[RX_SIZE];
     byte rx_in, rx_out;
-
-    word rd, rs; // data and status registers
 }
 serial;
 
-static serial ctx_a = { .rd = _SADR, .rs = _SASR };
-static serial ctx_b = { .rd = _SBDR, .rs = _SBSR };
+static serial ctx_a, ctx_b;
 
+////////////////////////////////////////////////////////////////////////////////
 static word get_div(dword baud) _sdcccall
 {
     return (dword)19200 * div_19200 / baud;
@@ -128,33 +126,29 @@ done2:
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void isr_serial(serial *ctx) _sdcccall
+////////////////////////////////////////////////////////////////////////////////
+static void isr_sera() _critical _interrupt
 {
-    byte rs = reg_read(ctx->rs);
+    byte rs = SASR;
     if (rs & 0x80) // have rx
     {
-        ctx->rx[ctx->rx_in] = reg_read(ctx->rd);
-        ctx->rx_in = ++ctx->rx_in & RX_MASK;
+        ctx_a.rx[ctx_a.rx_in] = SADR;
+        ctx_a.rx_in = ++ctx_a.rx_in & RX_MASK;
 
         // overflow? bump rx_out
-        if (ctx->rx_in == ctx->rx_out) ctx->rx_out = ++ctx->rx_out & RX_MASK;
+        if (ctx_a.rx_in == ctx_a.rx_out) ctx_a.rx_out = ++ctx_a.rx_out & RX_MASK;
     }
     if (!(rs & 0x08)) // tx done
     {
-        if (ctx->tx_size > 0)
+        if (ctx_a.tx_size > 0)
         {
-            if (ctx->tx_size > 1) reg_write(ctx->rd, *++ctx->tx_data);
-            --ctx->tx_size;
+            if (ctx_a.tx_size > 1) SADR = *++ctx_a.tx_data;
+            --ctx_a.tx_size;
         }
-        reg_write(ctx->rs, 0);
+        SASR = 0;
     }
 }
 
-static void isr_sera() _critical _interrupt { isr_serial(&ctx_a); }
-static void isr_serb() _critical _interrupt { isr_serial(&ctx_b); }
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 int sera_open(dword baud) _sdcccall
 {
     word div = get_div(baud);
@@ -191,13 +185,34 @@ void sera_send(const void *data, word size) _sdcccall
 
 void sera_puts(const char *s) _sdcccall { sera_send(s, strlen(s)); }
 
-////////////////////////////////////////////////////////////////////////////////
 int  sera_getc(int timeout) _sdcccall { return getc(&ctx_a, timeout); }
 word sera_recv(void *data, word size, int timeout) _sdcccall { return recv(&ctx_a, data, size, timeout); }
 int  sera_recv_all(void *data, word size, int timeout) _sdcccall { return sera_recv(data, size, timeout) == size ? OK : TIMEOUT; }
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+static void isr_serb() _critical _interrupt
+{
+    byte rs = SBSR;
+    if (rs & 0x80) // have rx
+    {
+        ctx_b.rx[ctx_b.rx_in] = SBDR;
+        ctx_b.rx_in = ++ctx_b.rx_in & RX_MASK;
+
+        // overflow? bump rx_out
+        if (ctx_b.rx_in == ctx_b.rx_out) ctx_b.rx_out = ++ctx_b.rx_out & RX_MASK;
+    }
+    if (!(rs & 0x08)) // tx done
+    {
+        if (ctx_b.tx_size > 0)
+        {
+            if (ctx_b.tx_size > 1) SBDR = *++ctx_b.tx_data;
+            --ctx_b.tx_size;
+        }
+        SBSR = 0;
+    }
+}
+
 int serb_open(dword baud) _sdcccall
 {
     word div = get_div(baud);
@@ -234,7 +249,6 @@ void serb_send(const void *data, word size) _sdcccall
 
 void serb_puts(const char *s) _sdcccall { serb_send(s, strlen(s)); }
 
-////////////////////////////////////////////////////////////////////////////////
 int  serb_getc(int timeout) _sdcccall { return getc(&ctx_b, timeout); }
 word serb_recv(void *data, word size, int timeout) _sdcccall { return recv(&ctx_b, data, size, timeout); }
 int  serb_recv_all(void *data, word size, int timeout) _sdcccall { return serb_recv(data, size, timeout) == size ? OK : TIMEOUT; }
