@@ -133,8 +133,8 @@ enum // SPCR
 
 enum // PBDDR
 {
-    PORTB_PIN0_7_INPUT = 0x00,
-    PORTB_PIN0_7_OUTPUT = 0xff,
+    PORTB_PINx_INPUT = 0x00,
+    PORTB_PINx_OUTPUT = 0xff,
 };
 
 enum // PCFR
