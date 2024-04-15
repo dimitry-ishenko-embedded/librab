@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "ivt.h"
 
-static byte *ivp;
+static byte *ivt;
 
 int ivt_intern_isr(byte num, void *isr) _sdcccall
 {
@@ -15,16 +15,16 @@ int ivt_intern_isr(byte num, void *isr) _sdcccall
 
 _asm
     xor a, a
-    ld (_ivp + 0), a
+    ld (_ivt + 0), a
     ld a, iir
-    ld (_ivp + 1), a
+    ld (_ivt + 1), a
 _endasm;
 
-    ivp += (num << 4);
+    byte *p = ivt + (num << 4);
     _critical
     {
-        *ivp = 0xc3; // jp opcode
-        *(void **)(ivp + 1) = isr;
+        *p = 0xc3; // jp opcode
+        *(void **)(p + 1) = isr;
     }
     return OK;
 }
@@ -35,16 +35,16 @@ int ivt_extern_isr(byte num, void *isr) _sdcccall
 
 _asm
     xor a, a
-    ld (_ivp + 0), a
+    ld (_ivt + 0), a
     ld a, eir
-    ld (_ivp + 1), a
+    ld (_ivt + 1), a
 _endasm;
 
-    ivp += (num << 4);
+    byte *p = ivt + (num << 4);
     _critical
     {
-        *ivp = 0xc3; // jp opcode
-        *(void **)(ivp + 1) = isr;
+        *p = 0xc3; // jp opcode
+        *(void **)(p + 1) = isr;
     }
     return OK;
 }
