@@ -44,6 +44,9 @@ _reg _at (0x007d) PEB5R;
 _reg _at (0x007e) PEB6R;
 _reg _at (0x007f) PEB7R;
 
+_reg _at (0x0098) I0CR;
+_reg _at (0x0099) I1CR;
+
 _reg _at (0x00a0) TACSR;
 _reg _at (0x00a1) TAPR;
 _reg _at (0x00a3) TAT1R;
@@ -176,6 +179,32 @@ enum // PEDDR
 {
     PEx_INPUT = 0x00,
     PEx_OUTPUT = 0xff,
+};
+
+enum // I0CR
+{
+    EXT_PE0_DISABLE = 0x00,
+    EXT_PE0_EDGE_FALL = 0x04,
+    EXT_PE0_EDGE_RISE = 0x08,
+    EXT_PE0_EDGE_BOTH = 0x0c,
+
+    EXT_PE4_DISABLE = 0x00,
+    EXT_PE4_EDGE_FALL = 0x10,
+    EXT_PE4_EDGE_RISE = 0x20,
+    EXT_PE4_EDGE_BOTH = 0x30,
+};
+
+enum // I1CR
+{
+    EXT_PE1_DISABLE = 0x00,
+    EXT_PE1_EDGE_FALL = 0x04,
+    EXT_PE1_EDGE_RISE = 0x08,
+    EXT_PE1_EDGE_BOTH = 0x0c,
+
+    EXT_PE5_DISABLE = 0x00,
+    EXT_PE5_EDGE_FALL = 0x10,
+    EXT_PE5_EDGE_RISE = 0x20,
+    EXT_PE5_EDGE_BOTH = 0x30,
 };
 
 enum // TACSR
