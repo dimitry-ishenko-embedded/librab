@@ -7,30 +7,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "ivt.h"
 
-static byte ivt;
-
-static void install(byte ivt, byte num, void *isr) _sdcccall
-{
-    byte *pd = (byte *)((ivt << 8) | (num << 4));
-    word pi = (word)(isr);
-
-    _critical
-    {
-        *pd++ = 0xc3; // jp opcode
-        *pd++ = pi;
-        *pd++ = pi >> 8;
-    }
-}
+static byte *ivp;
 
 int ivt_intern_isr(byte num, void *isr) _sdcccall
 {
     if (num > 0x1f) return FAIL;
 
 _asm
+    xor a, a
+    ld (_ivp + 0), a
     ld a, iir
-    ld (_ivt), a
+    ld (_ivp + 1), a
 _endasm;
-    install(ivt, num, isr);
+
+    ivp += (num << 4);
+    _critical
+    {
+        *ivp = 0xc3; // jp opcode
+        *(void **)(ivp + 1) = isr;
+    }
     return OK;
 }
 
@@ -39,10 +34,18 @@ int ivt_extern_isr(byte num, void *isr) _sdcccall
     if (num > 1) return FAIL;
 
 _asm
+    xor a, a
+    ld (_ivp + 0), a
     ld a, eir
-    ld (_ivt), a
+    ld (_ivp + 1), a
 _endasm;
-    install(ivt, num, isr);
+
+    ivp += (num << 4);
+    _critical
+    {
+        *ivp = 0xc3; // jp opcode
+        *(void **)(ivp + 1) = isr;
+    }
     return OK;
 }
 
