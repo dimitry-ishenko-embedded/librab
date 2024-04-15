@@ -146,36 +146,36 @@ enum // SPCR
 
 enum // PBDDR
 {
-    PORTB_PINx_INPUT = 0x00,
-    PORTB_PINx_OUTPUT = 0xff,
+    PBx_INPUT = 0x00,
+    PBx_OUTPUT = 0xff,
 };
 
 enum // PCFR
 {
-    PORTC_PIN0_TXD = 0x01,
-    PORTC_PIN2_TXC = 0x04,
-    PORTC_PIN4_TXB = 0x10,
-    PORTC_PIN6_TXA = 0x40,
+    PC0_TXD = 0x01,
+    PC2_TXC = 0x04,
+    PC4_TXB = 0x10,
+    PC6_TXA = 0x40,
 };
 
 enum // PECR
 {
-    PORTE_CLOCK_PERIF_DIV2 = 0x00,
-    PORTE_CLOCK_TIMERA1 = 0x11,
-    PORTE_CLOCK_TIMERB1 = 0x22,
-    PORTE_CLOCK_TIMERB2 = 0x33,
+    PE_CLOCK_PERIF_DIV2 = 0x00,
+    PE_CLOCK_TA1 = 0x11,
+    PE_CLOCK_TB1 = 0x22,
+    PE_CLOCK_TB2 = 0x33,
 };
 
 enum // PEFR
 {
-    PORTE_PINx_GPIO = 0x00,
-    PORTE_PINx_IO_STROBE = 0xff,
+    PEx_GPIO = 0x00,
+    PEx_IO_STROBE = 0xff,
 };
 
 enum // PEDDR
 {
-    PORTE_PINx_INPUT = 0x00,
-    PORTE_PINx_OUTPUT = 0xff,
+    PEx_INPUT = 0x00,
+    PEx_OUTPUT = 0xff,
 };
 
 enum // TACSR
