@@ -1,0 +1,13 @@
+%compile_commands.json
+-m16
+-nostdinc
+-I/usr/share/sdcc/include/
+-I/usr/share/sdcc/include/rab/
+-fasm-blocks
+-D_asm=__asm{
+-D_at(x)=
+-D_critical=
+-D_endasm=}
+-D_interrupt=
+-D_naked=
+-D_reg=word
