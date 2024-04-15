@@ -124,8 +124,11 @@ void board_init()
     WDTTR = 0x51;
     WDTTR = 0x54;
 
-    PCFR = PC6_TXA | PC4_TXB | PC2_TXC | PC0_TXD;
-    PEFR = PEx_GPIO;
+    PCFR  = PC6_TXA | PC4_TXB | PC2_TXC | PC0_TXD;
+    PEFR  = PEx_GPIO;
+    PGDCR = PGx_STANDARD;
+    PGDDR = PGx_MULTI;
+    PGFR  = PG7_RXE | PG6_TXE | PG3_RXF | PG2_TXF;
 
     TAPR  = TAPS  = TA_CLOCK_PERIF_DIV2;
     TACR  = TACS  = TAx_CLOCK_MAIN;
