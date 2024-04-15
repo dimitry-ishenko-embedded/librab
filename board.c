@@ -130,9 +130,9 @@ void board_init() _sdcccall
     PEFR = PEx_GPIO;
     PECR = PE_CLOCK_PERIF_DIV2;
 
-    TAPR  = TAPS  = TIMERA_CLOCK_PERIF_DIV2;
-    TACR  = TACS  = TIMERAx_CLOCK_MAIN;
-    TACSR = TACSS = TIMERA_CLOCK_ENABLE;
+    TAPR  = TAPS  = TA_CLOCK_PERIF_DIV2;
+    TACR  = TACS  = TAx_CLOCK_MAIN;
+    TACSR = TACSS = TA_CLOCK_ENABLE;
 
     tic = toc = msec_count = 0;
     ivt_intern_isr(INT_PERIODIC, &isr_periodic);
