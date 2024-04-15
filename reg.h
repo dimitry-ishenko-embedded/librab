@@ -29,8 +29,16 @@ _reg _at (0x0024) SPCR ;
 
 _reg _at (0x0040) PBDR;
 _reg _at (0x0047) PBDDR;
+
+_reg _at (0x0048) PGDR;
+_reg _at (0x004c) PGCR;
+_reg _at (0x004d) PGFR;
+_reg _at (0x004e) PGDCR;
+_reg _at (0x004f) PGDDR;
+
 _reg _at (0x0050) PCDR;
 _reg _at (0x0055) PCFR;
+
 _reg _at (0x0070) PEDR;
 _reg _at (0x0074) PECR;
 _reg _at (0x0075) PEFR;
@@ -179,6 +187,25 @@ enum // PEDDR
 {
     PEx_INPUT = 0x00,
     PEx_OUTPUT = 0xff,
+};
+
+enum // PGDCR
+{
+    PGx_STANDARD = 0x00,
+    PGx_OPEN_DRAIN = 0xff
+};
+
+enum // PGDDR
+{
+    PGx_MULTI = 0x44, // serial E & F outputs
+};
+
+enum // PGFR
+{
+    PG2_TXF = 0x04,
+    PG3_RXF = 0x08,
+    PG6_TXE = 0x40,
+    PG7_RXE = 0x80,
 };
 
 enum // I0CR
