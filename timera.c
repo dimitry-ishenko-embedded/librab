@@ -27,7 +27,7 @@ static void (*ctx[TA7 + 1])();
 static void isr_tima() _critical _interrupt
 {
     byte cs = TACSR >> 1;
-    for (byte n = TA1; n <= TA7; ++n, cs >>= 1) if (cs & 1) ctx[n]();
+    for (byte n = TA1; n <= TA7; ++n, cs >>= 1) if ((cs & 1) && ctx[n]) ctx[n]();
 }
 
 void tima_init() _sdcccall
@@ -46,7 +46,11 @@ static void tima_proc(byte n, void *proc) _sdcccall
         ctx[n] = proc;
         TACSR = (TACSS |= (1 << n));
     }
-    else TACSR = (TACSS &= ~(1 << n));
+    else
+    {
+        TACSR = (TACSS &= ~(1 << n));
+        ctx[n] = proc;
+    }
 }
 
 #pragma restore
