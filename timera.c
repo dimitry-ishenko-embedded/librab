@@ -11,12 +11,12 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 typedef void (*isr_t)();
-static isr_t tima_isr[8];
+static isr_t tima_isr[TIMERA7 + 1];
 
 static void isr_timera() _critical _interrupt
 {
-    byte rs = TACSR;
-    for (byte n = 1, b = 2; n < 8; ++n, b <<= 1) if ((rs & b) && tima_isr[n]) tima_isr[n]();
+    byte cs = TACSR >> 1;
+    for (byte n = TIMERA1; n <= TIMERA7; ++n, cs >>= 1) if ((cs & 1) && tima_isr[n]) tima_isr[n]();
 }
 
 void timera_init() _sdcccall
