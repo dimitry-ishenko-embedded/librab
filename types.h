@@ -11,6 +11,23 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+typedef uint8_t byte;
+typedef uint16_t word;
+typedef uint32_t dword;
+
+enum
+{
+    off = false,
+    on = true,
+};
+
+enum
+{
+    OK = 0,
+    FAIL = -1,
+    TIMEOUT = -2,
+};
+
 #ifndef _asm
 #  define _asm __asm
 #endif
@@ -42,24 +59,6 @@
 #ifndef _sdcccall
 #  define _sdcccall __sdcccall(1)
 #endif
-
-typedef uint8_t byte;
-typedef uint16_t word;
-typedef uint32_t dword;
-
-enum
-{
-    off = false,
-    on = true,
-    hi = true,
-};
-
-enum
-{
-    OK = 0,
-    FAIL = -1,
-    TIMEOUT = -2,
-};
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
