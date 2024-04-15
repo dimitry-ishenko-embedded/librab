@@ -10,7 +10,7 @@
 #include "reg.h"
 
 // milli-second counter (overflows every ~65 sec)
-word _at (0xdff8) msec_count;
+volatile word _at (0xdff8) msec_count;
 
 // divisor for 19200 baud
 byte _at (0xdffa) div_19200;

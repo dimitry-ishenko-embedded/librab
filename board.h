@@ -11,7 +11,7 @@
 #include "types.h"
 
 // milli-second counter (overflows every ~65 sec)
-extern word _at (0xdff8) msec_count;
+extern volatile word _at (0xdff8) msec_count;
 
 // divisor for 19200 baud
 extern byte _at (0xdffa) div_19200;
