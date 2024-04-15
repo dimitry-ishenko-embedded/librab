@@ -146,8 +146,9 @@ void sleep(word msec)
 {
     word start = msec_count;
     word end = start + msec;
+    word count; // intermediate variable for "atomic" comparisons below
 
     if (end < start)
-        while (msec_count >= start); // wait for msec_count to overflow
-    while (msec_count < end);
+        do count = msec_count; while (count >= start); // wait for msec_count to overflow
+    do count = msec_count; while (count < end);
 }
