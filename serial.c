@@ -37,32 +37,6 @@ static word get_div(dword baud) _sdcccall
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void flush(serial *ctx) _sdcccall
-{
-    _critical { ctx->rx_out = ctx->rx_in; }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-static void putc(serial *ctx, byte c) _sdcccall
-{
-    ctx->tx_size = 1;
-    reg_write(ctx->rd, c);
-
-    while (ctx->tx_size);
-}
-
-static void send(serial *ctx, const byte *data, word size) _sdcccall
-{
-    if (!size) return;
-
-    ctx->tx_data = data;
-    ctx->tx_size = size;
-    reg_write(ctx->rd, *data);
-
-    while (ctx->tx_size);
-}
-
-////////////////////////////////////////////////////////////////////////////////
 static inline byte get1(serial *ctx) _sdcccall
 {
     byte d;
@@ -192,12 +166,30 @@ int sera_open(dword baud) _sdcccall
     return OK;
 }
 
-void sera_flush() _sdcccall { flush(&sera); }
+void sera_flush() _sdcccall _critical { sera.rx_out = sera.rx_in; }
 
-void sera_putc(byte c) _sdcccall { putc(&sera, c); }
-void sera_send(const void *data, word size) _sdcccall { send(&sera, data, size); }
-void sera_puts(const char *s) _sdcccall { send(&sera, (byte *)s, strlen(s)); }
+////////////////////////////////////////////////////////////////////////////////
+void sera_putc(byte c) _sdcccall
+{
+    sera.tx_size = 1;
+    SADR = c;
+    while (sera.tx_size);
+}
 
+void sera_send(const void *data, word size) _sdcccall
+{
+    if (!size) return;
+
+    sera.tx_data = data;
+    sera.tx_size = size;
+    SADR = *(const byte *)data;
+
+    while (sera.tx_size);
+}
+
+void sera_puts(const char *s) _sdcccall { sera_send(s, strlen(s)); }
+
+////////////////////////////////////////////////////////////////////////////////
 int  sera_getc(int timeout) _sdcccall { return getc(&sera, timeout); }
 word sera_recv(void *data, word size, int timeout) _sdcccall { return recv(&sera, data, size, timeout); }
 int  sera_recv_all(void *data, word size, int timeout) _sdcccall { return sera_recv(data, size, timeout) == size ? OK : TIMEOUT; }
@@ -217,12 +209,30 @@ int serb_open(dword baud) _sdcccall
     return OK;
 }
 
-void serb_flush() _sdcccall { flush(&serb); }
+void serb_flush() _sdcccall _critical { serb.rx_out = serb.rx_in; }
 
-void serb_putc(byte c) _sdcccall { putc(&serb, c); }
-void serb_send(const void *data, word size) _sdcccall { send(&serb, data, size); }
-void serb_puts(const char *s) _sdcccall { send(&serb, (byte *)s, strlen(s)); }
+////////////////////////////////////////////////////////////////////////////////
+void serb_putc(byte c) _sdcccall
+{
+    serb.tx_size = 1;
+    SBDR = c;
+    while (serb.tx_size);
+}
 
+void serb_send(const void *data, word size) _sdcccall
+{
+    if (!size) return;
+
+    serb.tx_data = data;
+    serb.tx_size = size;
+    SBDR = *(const byte *)data;
+
+    while (serb.tx_size);
+}
+
+void serb_puts(const char *s) _sdcccall { serb_send(s, strlen(s)); }
+
+////////////////////////////////////////////////////////////////////////////////
 int  serb_getc(int timeout) _sdcccall { return getc(&serb, timeout); }
 word serb_recv(void *data, word size, int timeout) _sdcccall { return recv(&serb, data, size, timeout); }
 int  serb_recv_all(void *data, word size, int timeout) _sdcccall { return serb_recv(data, size, timeout) == size ? OK : TIMEOUT; }
