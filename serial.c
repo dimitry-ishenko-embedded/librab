@@ -30,8 +30,6 @@ serial;
 
 static serial sera = { .rd = _SADR, .rs = _SASR };
 static serial serb = { .rd = _SBDR, .rs = _SBSR };
-static serial serc = { .rd = _SCDR, .rs = _SCSR };
-static serial serd = { .rd = _SDDR, .rs = _SDSR };
 
 static word get_div(dword baud) _sdcccall
 {
@@ -178,8 +176,6 @@ static void isr_serial(serial *ctx) _sdcccall
 
 static void isr_sera() _critical _interrupt { isr_serial(&sera); }
 static void isr_serb() _critical _interrupt { isr_serial(&serb); }
-static void isr_serc() _critical _interrupt { isr_serial(&serc); }
-static void isr_serd() _critical _interrupt { isr_serial(&serd); }
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
