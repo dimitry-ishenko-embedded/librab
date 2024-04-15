@@ -12,15 +12,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 static void (*service[TIMERA7 + 1])();
 
-static void isr_timera() _critical _interrupt
+static void isr_tima() _critical _interrupt
 {
     byte cs = TACSR >> 1;
-    for (byte n = TIMERA1; n <= TIMERA7; ++n, cs >>= 1) if ((cs & 1) && service[n]) service[n]();
+    for (byte n = TIMERA1; n <= TIMERA7; ++n, cs >>= 1)
+        if ((cs & 1) && service[n]) service[n]();
 }
 
 void tima_init() _sdcccall
 {
-    ivt_intern_isr(INT_TIMERA, isr_timera);
+    ivt_intern_isr(INT_TIMERA, isr_tima);
     TACR = (TACS |= INT_PRIO1);
 }
 
