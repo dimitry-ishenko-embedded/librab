@@ -104,9 +104,9 @@ static int getc(serial *ctx, int timeout) _sdcccall
     }
 }
 
-static int recv(serial *ctx, byte *data, word max_size, int timeout) _sdcccall
+static word recv(serial *ctx, byte *data, word max_size, int timeout) _sdcccall
 {
-    int n = 0;
+    word n = 0;
     if (timeout < 0) // recv all
     {
         for (byte *p = data, *e = p + max_size; p != e; ++p, ++n)
@@ -203,7 +203,10 @@ void sera_send(const void *data, word size) _sdcccall { send(&sera, data, size);
 void sera_puts(const char *s) _sdcccall { send(&sera, (byte *)s, strlen(s)); }
 
 int  sera_getc(int timeout) _sdcccall { return getc(&sera, timeout); }
-int  sera_recv(void *data, word max_size, int timeout) _sdcccall { return recv(&sera, data, max_size, timeout); }
+word sera_recv(void *data, word size, int timeout) _sdcccall
+{
+    return recv(&sera, data, size, timeout);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -227,4 +230,7 @@ void serb_send(const void *data, word size) _sdcccall { send(&serb, data, size);
 void serb_puts(const char *s) _sdcccall { send(&serb, (byte *)s, strlen(s)); }
 
 int  serb_getc(int timeout) _sdcccall { return getc(&serb, timeout); }
-int  serb_recv(void *data, word max_size, int timeout) _sdcccall { return recv(&serb, data, max_size, timeout); }
+word serb_recv(void *data, word size, int timeout) _sdcccall
+{
+    return recv(&serb, data, size, timeout);
+}

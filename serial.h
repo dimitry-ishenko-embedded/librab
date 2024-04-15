@@ -19,7 +19,7 @@ void sera_send(const void *data, word size) _sdcccall;
 void sera_puts(const char *s) _sdcccall;
 
 int  sera_getc(int timeout) _sdcccall;
-int  sera_recv(void *data, word max_size, int timeout) _sdcccall;
+word sera_recv(void *data, word size, int timeout) _sdcccall;
 
 ////////////////////////////////////////////////////////////////////////////////
 int  serb_open(dword baud) _sdcccall;
@@ -30,7 +30,7 @@ void serb_send(const void *data, word size) _sdcccall;
 void serb_puts(const char *s) _sdcccall;
 
 int  serb_getc(int timeout) _sdcccall;
-int  serb_recv(void *data, word max_size, int timeout) _sdcccall;
+word serb_recv(void *data, word size, int timeout) _sdcccall;
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
