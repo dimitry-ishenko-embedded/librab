@@ -28,10 +28,10 @@ typedef struct
 }
 serial;
 
-static serial sera = { .rd = 0x00c0 /*SADR*/, .rs = 0x00c3 /*SASR*/ };
-static serial serb = { .rd = 0x00d0 /*SBDR*/, .rs = 0x00d3 /*SBSR*/ };
-static serial serc = { .rd = 0x00e0 /*SCDR*/, .rs = 0x00e3 /*SCSR*/ };
-static serial serd = { .rd = 0x00f0 /*SDDR*/, .rs = 0x00f3 /*SDSR*/ };
+static serial sera = { .rd = _SADR, .rs = _SASR };
+static serial serb = { .rd = _SBDR, .rs = _SBSR };
+static serial serc = { .rd = _SCDR, .rs = _SCSR };
+static serial serd = { .rd = _SDDR, .rs = _SDSR };
 
 static word get_div(dword baud) _sdcccall
 {
