@@ -107,6 +107,7 @@ extern byte _at (0xdfa4) TACS;
 enum // common interrupt priorities
 {
     INT_NMASK = 0xfc,
+    INT_DISABLE = 0x00,
     INT_PRIO1 = 0x01,
     INT_PRIO2 = 0x02,
     INT_PRIO3 = 0x03,
