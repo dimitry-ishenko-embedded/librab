@@ -22,7 +22,7 @@ static void isr_timera() _critical _interrupt
 void timera_init() _sdcccall
 {
     ivt_intern_isr(INT_TIMERA, isr_timera);
-    TACR = (TACRW |= INT_PRIO2);
+    TACR = (TACS |= INT_PRIO2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

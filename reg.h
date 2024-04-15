@@ -12,6 +12,7 @@
 
 #define reg(addr, name) enum { _ ## name = addr }; _reg _at (_ ## name) name;
 
+// I/O registers
 reg(0x0000, GCSR )
 reg(0x0002, RTC0R)
 reg(0x0003, RTC1R)
@@ -44,8 +45,6 @@ reg(0x007c, PEB4R)
 reg(0x007d, PEB5R)
 reg(0x007e, PEB6R)
 reg(0x007f, PEB7R)
-
-extern byte TACSRW, TAPRW, TACRW; // shadow registers
 
 reg(0x00a0, TACSR)
 reg(0x00a1, TAPR )
@@ -88,6 +87,11 @@ reg(0x00f2, SDLR )
 reg(0x00f3, SDSR )
 reg(0x00f4, SDCR )
 reg(0x00f5, SDER )
+
+// shadow registers
+extern byte _at (0xdfa0) TACSS;
+extern byte _at (0xdfa1) TAPS;
+extern byte _at (0xdfa4) TACS;
 
 void reg_write(word n, byte d) _sdcccall;
 byte reg_read(word n) _sdcccall;
