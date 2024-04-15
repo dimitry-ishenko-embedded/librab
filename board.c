@@ -9,7 +9,6 @@
 #include "ivt.h"
 #include "reg.h"
 
-////////////////////////////////////////////////////////////////////////////////
 // milli-second counter (overflows every ~65 sec)
 word _at (0xdff8) msec_count;
 
@@ -141,6 +140,7 @@ void board_init() _sdcccall
     __asm__("ipset 0");
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void sleep(word msec) _sdcccall
 {
     word start = msec_count;

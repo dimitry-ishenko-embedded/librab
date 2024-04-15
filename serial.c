@@ -12,7 +12,6 @@
 
 #include <string.h>
 
-////////////////////////////////////////////////////////////////////////////////
 typedef struct
 {
     const byte *tx_data;
@@ -149,6 +148,7 @@ static void isr_sera() _critical _interrupt
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 int sera_open(dword baud) _sdcccall
 {
     word div = get_div(baud);
@@ -162,6 +162,7 @@ int sera_open(dword baud) _sdcccall
     return OK;
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void sera_flush() _sdcccall _critical { ctx_a.rx_out = ctx_a.rx_in; }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -172,6 +173,7 @@ void sera_putc(byte c) _sdcccall
     while (ctx_a.tx_size);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void sera_send(const void *data, word size) _sdcccall
 {
     if (!size) return;
@@ -183,6 +185,7 @@ void sera_send(const void *data, word size) _sdcccall
     while (ctx_a.tx_size);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void sera_puts(const char *s) _sdcccall { sera_send(s, strlen(s)); }
 
 int  sera_getc(int timeout) _sdcccall { return getc(&ctx_a, timeout); }
@@ -213,6 +216,7 @@ static void isr_serb() _critical _interrupt
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 int serb_open(dword baud) _sdcccall
 {
     word div = get_div(baud);
@@ -226,6 +230,7 @@ int serb_open(dword baud) _sdcccall
     return OK;
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void serb_flush() _sdcccall _critical { ctx_b.rx_out = ctx_b.rx_in; }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -236,6 +241,7 @@ void serb_putc(byte c) _sdcccall
     while (ctx_b.tx_size);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void serb_send(const void *data, word size) _sdcccall
 {
     if (!size) return;
@@ -247,6 +253,7 @@ void serb_send(const void *data, word size) _sdcccall
     while (ctx_b.tx_size);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void serb_puts(const char *s) _sdcccall { serb_send(s, strlen(s)); }
 
 int  serb_getc(int timeout) _sdcccall { return getc(&ctx_b, timeout); }
