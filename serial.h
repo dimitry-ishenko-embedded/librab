@@ -13,6 +13,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int  sera_open(dword baud);
 void sera_flush();
+void sera_close();
 
 void sera_putc(byte c);
 void sera_send(const void *data, word size);
@@ -25,6 +26,7 @@ int  sera_recv_all(void *data, word size, int timeout);
 ////////////////////////////////////////////////////////////////////////////////
 int  serb_open(dword baud);
 void serb_flush();
+void serb_close();
 
 void serb_putc(byte c);
 void serb_send(const void *data, word size);
@@ -37,6 +39,7 @@ int  serb_recv_all(void *data, word size, int timeout);
 ////////////////////////////////////////////////////////////////////////////////
 int  sere_open(dword baud);
 void sere_flush();
+void sere_close();
 
 void sere_putc(byte c);
 void sere_send(const void *data, word size);
