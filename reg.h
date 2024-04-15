@@ -104,11 +104,11 @@ enum // common interrupt priorities
 
 enum // GCSR
 {
-    SPEED_MAIN_CLOCK = 0x08,
-    SPEED_MAIN_CLOCK_DIV2 = 0x0c,
-    SPEED_MAIN_CLOCK_DIV4 = 0x18,
-    SPEED_MAIN_CLOCK_DIV6 = 0x0c,
-    SPEED_MAIN_CLOCK_DIV8 = 0x00,
+    CPU_MAIN_CLOCK = 0x08,
+    CPU_MAIN_CLOCK_DIV2 = 0x0c,
+    CPU_MAIN_CLOCK_DIV4 = 0x18,
+    CPU_MAIN_CLOCK_DIV6 = 0x0c,
+    CPU_MAIN_CLOCK_DIV8 = 0x00,
 };
 
 enum // GCDR

@@ -116,7 +116,7 @@ void board_init() _sdcccall
     MB2CR = MEM_BANK_0WS | MEM_BANK_OE1_WE1 | MEM_BANK_CS1;
 
     // run at max speed
-    GCSR = GCSS = SPEED_MAIN_CLOCK;
+    GCSR = GCSS = CPU_MAIN_CLOCK;
     GCDR = DOUBLER_8NS;
 
     calc_div_19200();
