@@ -21,7 +21,7 @@ typedef struct
 #define RX_SIZE 16 // must be a power of 2!!
 #define RX_MASK (RX_SIZE - 1)
 
-    volatile byte rx[RX_SIZE];
+    volatile byte rx_data[RX_SIZE];
     volatile byte rx_in, rx_out;
 }
 serial;
@@ -40,7 +40,7 @@ static inline byte get1(serial *ctx) _sdcccall
     byte d;
     _critical
     {
-        d = ctx->rx[ctx->rx_out];
+        d = ctx->rx_data[ctx->rx_out];
         ctx->rx_out = ++ctx->rx_out & RX_MASK;
     }
     return d;
@@ -132,7 +132,7 @@ static void isr_sera() _critical _interrupt
     byte rs = SASR;
     if (rs & 0x80) // have rx
     {
-        ctx_a.rx[ctx_a.rx_in] = SADR;
+        ctx_a.rx_data[ctx_a.rx_in] = SADR;
         ctx_a.rx_in = ++ctx_a.rx_in & RX_MASK;
 
         // overflow? bump rx_out
@@ -196,7 +196,7 @@ static void isr_serb() _critical _interrupt
     byte rs = SBSR;
     if (rs & 0x80) // have rx
     {
-        ctx_b.rx[ctx_b.rx_in] = SBDR;
+        ctx_b.rx_data[ctx_b.rx_in] = SBDR;
         ctx_b.rx_in = ++ctx_b.rx_in & RX_MASK;
 
         // overflow? bump rx_out
