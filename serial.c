@@ -41,7 +41,7 @@ static inline byte get1(serial *ctx) _sdcccall
     _critical
     {
         d = ctx->rx_data[ctx->rx_out];
-        ctx->rx_out = ++ctx->rx_out & RX_MASK;
+        ctx->rx_out = (ctx->rx_out + 1) & RX_MASK;
     }
     return d;
 }
@@ -133,10 +133,10 @@ static void isr_sera() _critical _interrupt
     if (rs & 0x80) // have rx
     {
         ctx_a.rx_data[ctx_a.rx_in] = SADR;
-        ctx_a.rx_in = ++ctx_a.rx_in & RX_MASK;
+        ctx_a.rx_in = (ctx_a.rx_in + 1) & RX_MASK;
 
         // overflow? bump rx_out
-        if (ctx_a.rx_in == ctx_a.rx_out) ctx_a.rx_out = ++ctx_a.rx_out & RX_MASK;
+        if (ctx_a.rx_in == ctx_a.rx_out) ctx_a.rx_out = (ctx_a.rx_out + 1) & RX_MASK;
     }
     if (!(rs & 0x08)) // tx done
     {
@@ -197,10 +197,10 @@ static void isr_serb() _critical _interrupt
     if (rs & 0x80) // have rx
     {
         ctx_b.rx_data[ctx_b.rx_in] = SBDR;
-        ctx_b.rx_in = ++ctx_b.rx_in & RX_MASK;
+        ctx_b.rx_in = (ctx_b.rx_in + 1) & RX_MASK;
 
         // overflow? bump rx_out
-        if (ctx_b.rx_in == ctx_b.rx_out) ctx_b.rx_out = ++ctx_b.rx_out & RX_MASK;
+        if (ctx_b.rx_in == ctx_b.rx_out) ctx_b.rx_out = (ctx_b.rx_out + 1) & RX_MASK;
     }
     if (!(rs & 0x08)) // tx done
     {
