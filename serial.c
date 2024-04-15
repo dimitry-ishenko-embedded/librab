@@ -15,14 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct
 {
-    const byte *tx_data;
-    word tx_size;
+    volatile const byte *tx_data;
+    volatile word tx_size;
 
 #define RX_SIZE 16 // must be a power of 2!!
 #define RX_MASK (RX_SIZE - 1)
 
-    byte rx[RX_SIZE];
-    byte rx_in, rx_out;
+    volatile byte rx[RX_SIZE];
+    volatile byte rx_in, rx_out;
 }
 serial;
 
