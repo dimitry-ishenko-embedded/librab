@@ -169,14 +169,6 @@ enum // PCFR
     PC6_TXA = 0x40,
 };
 
-enum // PECR
-{
-    PE_CLOCK_PERIF_DIV2 = 0x00,
-    PE_CLOCK_TA1 = 0x11,
-    PE_CLOCK_TB1 = 0x22,
-    PE_CLOCK_TB2 = 0x33,
-};
-
 enum // PEFR
 {
     PEx_GPIO = 0x00,
