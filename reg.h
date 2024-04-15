@@ -95,9 +95,6 @@ extern byte _at (0xdfa0) TACSS;
 extern byte _at (0xdfa1) TAPS;
 extern byte _at (0xdfa4) TACS;
 
-void reg_write(word n, byte d) _sdcccall;
-byte reg_read(word n) _sdcccall;
-
 ////////////////////////////////////////////////////////////////////////////////
 enum // common interrupt priorities
 {
