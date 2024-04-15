@@ -40,16 +40,6 @@ int tima_service(byte n, void *srv) _sdcccall
 #pragma restore
 
 ////////////////////////////////////////////////////////////////////////////////
-int tima_clock_a1(byte n, bool b) _sdcccall
-{
-    if (n < TIMERA2 || n > TIMERA7) return FAIL;
-
-    byte m = 1 << (n - TIMERA1 + 1);
-    TACR = TACS = b ? TACS | m : TACS & ~m;
-    return OK;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 int tima_enable(byte n, bool b) _sdcccall
 {
     if (n < TIMERA1 || n > TIMERA7) return FAIL;

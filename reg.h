@@ -195,7 +195,13 @@ enum // TAPR
 enum // TACR
 {
     TIMERAx_CLOCK_MAIN = 0x00,
-    TIMERAx_CLOCK_A1 = 0xfc,
+
+    TIMERA2_CLOCK_A1 = 0x04,
+    TIMERA3_CLOCK_A1 = 0x08,
+    TIMERA4_CLOCK_A1 = 0x10,
+    TIMERA5_CLOCK_A1 = 0x20,
+    TIMERA6_CLOCK_A1 = 0x40,
+    TIMERA7_CLOCK_A1 = 0x80,
 };
 
 enum // SACR
