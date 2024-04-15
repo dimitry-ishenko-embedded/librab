@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "ivt.h"
 
-static byte *ivt;
+static volatile byte *ivt;
 
 int ivt_intern_isr(byte num, void *isr) _sdcccall
 {
