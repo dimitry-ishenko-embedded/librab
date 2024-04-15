@@ -204,20 +204,20 @@ enum // TACR
 
 enum // SACR
 {
-    SERIALA_MODE_8BIT = 0x00,
+    SA_8BIT = 0x00,
 
-    SERIALA_PORTC_IN = 0x00,
-    SERIALA_PORTD_IN = 0x01,
-    SERIALA_DISABLE_IN = 0x10,
+    SA_PC_IN = 0x00,
+    SA_PD_IN = 0x01,
+    SA_DISABLE_IN = 0x10,
 };
 
 enum // SBCR
 {
-    SERIALB_MODE_8BIT = 0x00,
+    SB_8BIT = 0x00,
 
-    SERIALB_PORTC_IN = 0x00,
-    SERIALB_PORTD_IN = 0x01,
-    SERIALB_DISABLE_IN = 0x10,
+    SB_PC_IN = 0x00,
+    SB_PD_IN = 0x01,
+    SB_DISABLE_IN = 0x10,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
