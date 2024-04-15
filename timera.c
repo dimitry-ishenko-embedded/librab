@@ -21,13 +21,13 @@ enum
     TA7,
 };
 
-static void (*ctx[TA7 + 1])();
+static void (*proc[TA7 + 1])();
 
 ////////////////////////////////////////////////////////////////////////////////
 static void isr_tima() _critical _interrupt
 {
     byte cs = TACSR >> 1;
-    for (byte n = TA1; n <= TA7; ++n, cs >>= 1) if ((cs & 1) && ctx[n]) ctx[n]();
+    for (byte n = TA1; n <= TA7; ++n, cs >>= 1) if ((cs & 1) && proc[n]) proc[n]();
 }
 
 void tima_init() _sdcccall
@@ -39,26 +39,26 @@ void tima_init() _sdcccall
 #pragma save
 #pragma disable_warning 244
 
-static void tima_proc(byte n, void *proc) _sdcccall
+static void tima_proc(byte n, void *p) _sdcccall
 {
-    if (proc)
+    if (p)
     {
-        ctx[n] = proc;
+        proc[n] = p;
         TACSR = (TACSS |= (1 << n));
     }
     else
     {
         TACSR = (TACSS &= ~(1 << n));
-        ctx[n] = proc;
+        proc[n] = p;
     }
 }
 
 #pragma restore
 
-void tima1_proc(void *proc) _sdcccall { tima_proc(TA1, proc); }
-void tima2_proc(void *proc) _sdcccall { tima_proc(TA2, proc); }
-void tima3_proc(void *proc) _sdcccall { tima_proc(TA3, proc); }
-void tima4_proc(void *proc) _sdcccall { tima_proc(TA4, proc); }
-void tima5_proc(void *proc) _sdcccall { tima_proc(TA5, proc); }
-void tima6_proc(void *proc) _sdcccall { tima_proc(TA6, proc); }
-void tima7_proc(void *proc) _sdcccall { tima_proc(TA7, proc); }
+void tima1_proc(void *p) _sdcccall { tima_proc(TA1, p); }
+void tima2_proc(void *p) _sdcccall { tima_proc(TA2, p); }
+void tima3_proc(void *p) _sdcccall { tima_proc(TA3, p); }
+void tima4_proc(void *p) _sdcccall { tima_proc(TA4, p); }
+void tima5_proc(void *p) _sdcccall { tima_proc(TA5, p); }
+void tima6_proc(void *p) _sdcccall { tima_proc(TA6, p); }
+void tima7_proc(void *p) _sdcccall { tima_proc(TA7, p); }

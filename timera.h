@@ -11,13 +11,13 @@
 #include "types.h"
 
 void tima_init() _sdcccall;
-void tima1_proc(void *proc) _sdcccall;
-void tima2_proc(void *proc) _sdcccall;
-void tima3_proc(void *proc) _sdcccall;
-void tima4_proc(void *proc) _sdcccall;
-void tima5_proc(void *proc) _sdcccall;
-void tima6_proc(void *proc) _sdcccall;
-void tima7_proc(void *proc) _sdcccall;
+void tima1_proc(void *) _sdcccall;
+void tima2_proc(void *) _sdcccall;
+void tima3_proc(void *) _sdcccall;
+void tima4_proc(void *) _sdcccall;
+void tima5_proc(void *) _sdcccall;
+void tima6_proc(void *) _sdcccall;
+void tima7_proc(void *) _sdcccall;
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
