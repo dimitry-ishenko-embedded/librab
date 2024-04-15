@@ -54,7 +54,7 @@ _endasm;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void compute_div_19200() _critical
+static void calc_div_19200() _critical
 {
 _asm
 ; wait for the lowest 11 bits to be cleared
@@ -101,7 +101,7 @@ _endasm;
 void board_init() _sdcccall
 {
     // no bootstrap
-    SPCR = SMODE_DISABLE; 
+    SPCR = SMODE_DISABLE;
 
     // fast Flash & RAM
     MB0CR = MEM_BANK_0WS | MEM_BANK_OE0     | MEM_BANK_CS0;
@@ -111,7 +111,7 @@ void board_init() _sdcccall
     GCSR = SPEED_MAIN_CLOCK;
     GCDR = DOUBLER_8NS;
 
-    compute_div_19200();
+    calc_div_19200();
 
     // disable watchdog
     WDTTR = 0x51;
