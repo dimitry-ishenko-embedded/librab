@@ -10,7 +10,7 @@
 static byte *ivt;
 
 ////////////////////////////////////////////////////////////////////////////////
-int ivt_intern_isr(byte num, void *isr) _sdcccall
+int ivt_intern_isr(byte num, void *isr)
 {
     if (num > 0x1f) return FAIL;
 
@@ -31,7 +31,7 @@ _endasm;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int ivt_extern_isr(byte num, void *isr) _sdcccall
+int ivt_extern_isr(byte num, void *isr)
 {
     if (num > 1) return FAIL;
 

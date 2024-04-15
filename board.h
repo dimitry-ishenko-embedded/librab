@@ -16,8 +16,8 @@ extern word _at (0xdff8) msec_count;
 // divisor for 19200 baud
 extern byte _at (0xdffa) div_19200;
 
-void board_init() _sdcccall;
-void sleep(word msec) _sdcccall;
+void board_init();
+void sleep(word msec);
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif

@@ -99,7 +99,7 @@ _endasm;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void board_init() _sdcccall
+void board_init()
 {
     // IMPORTANT:
     // This function is run before main() and any global variables set here
@@ -141,7 +141,7 @@ void board_init() _sdcccall
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void sleep(word msec) _sdcccall
+void sleep(word msec)
 {
     word start = msec_count;
     word end = start + msec;

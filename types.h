@@ -56,9 +56,5 @@ enum
 #  define _reg __sfr __banked
 #endif
 
-#ifndef _sdcccall
-#  define _sdcccall __sdcccall(1)
-#endif
-
 ////////////////////////////////////////////////////////////////////////////////
 #endif

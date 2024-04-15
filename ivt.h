@@ -26,8 +26,8 @@ enum
     INT_EXT1 = 0x01,
 };
 
-int ivt_intern_isr(byte num, void *isr) _sdcccall;
-int ivt_extern_isr(byte num, void *isr) _sdcccall;
+int ivt_intern_isr(byte num, void *isr);
+int ivt_extern_isr(byte num, void *isr);
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
