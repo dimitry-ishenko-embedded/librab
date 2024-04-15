@@ -25,7 +25,7 @@ typedef struct
 }
 serial;
 
-static serial ctx_a, ctx_b;
+static serial ctx_a, ctx_b, ctx_e;
 
 ////////////////////////////////////////////////////////////////////////////////
 static word get_div(dword baud)
@@ -259,3 +259,71 @@ void serb_puts(const char *s) { serb_send(s, strlen(s)); }
 int  serb_getc(int timeout) { return getc(&ctx_b, timeout); }
 word serb_recv(void *data, word size, int timeout) { return recv(&ctx_b, data, size, timeout); }
 int  serb_recv_all(void *data, word size, int timeout) { return serb_recv(data, size, timeout) == size ? OK : TIMEOUT; }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+static void isr_sere() _critical _interrupt
+{
+    byte rs = SESR;
+    if (rs & 0x80) // have rx
+    {
+        ctx_e.rx_data[ctx_e.rx_in] = SEDR;
+        ctx_e.rx_in = (ctx_e.rx_in + 1) & RX_MASK;
+
+        // overflow? bump rx_out
+        if (ctx_e.rx_in == ctx_e.rx_out) ctx_e.rx_out = (ctx_e.rx_out + 1) & RX_MASK;
+    }
+    if (!(rs & 0x08)) // tx done
+    {
+        if (ctx_e.tx_size > 0)
+        {
+            if (ctx_e.tx_size > 1) SEDR = *++ctx_e.tx_data;
+            --ctx_e.tx_size;
+        }
+        SESR = 0;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int sere_open(dword baud)
+{
+    word div = get_div(baud);
+    if (div > 255) return FAIL;
+
+    ivt_intern_isr(INT_SERE, &isr_sere);
+
+    SECR = SB_IN_PC | SB_8BIT | INT_PRIO1;
+    TAT2R = div;
+
+    return OK;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void sere_flush() _critical { ctx_e.rx_out = ctx_e.rx_in; }
+
+////////////////////////////////////////////////////////////////////////////////
+void sere_putc(byte c)
+{
+    ctx_e.tx_size = 1;
+    SEDR = c;
+    while (ctx_e.tx_size);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void sere_send(const void *data, word size)
+{
+    if (!size) return;
+
+    ctx_e.tx_data = data;
+    ctx_e.tx_size = size;
+    SEDR = *(const byte *)data;
+
+    while (ctx_e.tx_size);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void sere_puts(const char *s) { sere_send(s, strlen(s)); }
+
+int  sere_getc(int timeout) { return getc(&ctx_e, timeout); }
+word sere_recv(void *data, word size, int timeout) { return recv(&ctx_e, data, size, timeout); }
+int  sere_recv_all(void *data, word size, int timeout) { return sere_recv(data, size, timeout) == size ? OK : TIMEOUT; }

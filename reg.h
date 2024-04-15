@@ -68,6 +68,13 @@ _reg _at (0x00c3) SASR;
 _reg _at (0x00c4) SACR;
 _reg _at (0x00c5) SAER;
 
+_reg _at (0x00c8) SEDR;
+_reg _at (0x00c9) SEAR;
+_reg _at (0x00ca) SELR;
+_reg _at (0x00cb) SESR;
+_reg _at (0x00cc) SECR;
+_reg _at (0x00cd) SEER;
+
 _reg _at (0x00d0) SBDR;
 _reg _at (0x00d1) SBAR;
 _reg _at (0x00d2) SBLR;
@@ -255,6 +262,15 @@ enum // SBCR
     SB_IN_PC = 0x00,
     SB_IN_PD = 0x10,
     SB_IN_DISABLE = 0x20,
+};
+
+enum // SECR
+{
+    SE_8BIT = 0x00,
+
+    SE_IN_PG7 = 0x00,
+    SE_IN_PG5 = 0x10,
+    SE_IN_DISABLE = 0x20,
 };
 
 ////////////////////////////////////////////////////////////////////////////////

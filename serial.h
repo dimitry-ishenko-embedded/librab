@@ -35,4 +35,16 @@ word serb_recv(void *data, word size, int timeout);
 int  serb_recv_all(void *data, word size, int timeout);
 
 ////////////////////////////////////////////////////////////////////////////////
+int  sere_open(dword baud);
+void sere_flush();
+
+void sere_putc(byte c);
+void sere_send(const void *data, word size);
+void sere_puts(const char *s);
+
+int  sere_getc(int timeout);
+word sere_recv(void *data, word size, int timeout);
+int  sere_recv_all(void *data, word size, int timeout);
+
+////////////////////////////////////////////////////////////////////////////////
 #endif
