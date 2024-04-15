@@ -22,7 +22,7 @@ enum
 };
 
 void tima_init() _sdcccall;
-int  tima_handle(byte n, void *cb) _sdcccall;
+int  tima_service(byte n, void *srv) _sdcccall;
 int  tima_count(byte n, byte c) _sdcccall;
 int  tima_clock_a1(byte n, bool b) _sdcccall;
 int  tima_enable(byte n, bool b) _sdcccall;

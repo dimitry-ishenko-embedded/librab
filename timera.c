@@ -10,12 +10,12 @@
 #include "timera.h"
 
 ////////////////////////////////////////////////////////////////////////////////
-static void (*handle[TIMERA7 + 1])();
+static void (*service[TIMERA7 + 1])();
 
 static void isr_timera() _critical _interrupt
 {
     byte cs = TACSR >> 1;
-    for (byte n = TIMERA1; n <= TIMERA7; ++n, cs >>= 1) if ((cs & 1) && handle[n]) handle[n]();
+    for (byte n = TIMERA1; n <= TIMERA7; ++n, cs >>= 1) if ((cs & 1) && service[n]) service[n]();
 }
 
 void tima_init() _sdcccall
@@ -28,11 +28,11 @@ void tima_init() _sdcccall
 #pragma save
 #pragma disable_warning 244
 
-int tima_handle(byte n, void *cb) _sdcccall
+int tima_service(byte n, void *srv) _sdcccall
 {
     if (n < TIMERA1 || n > TIMERA7) return FAIL;
 
-    _critical { handle[n] = cb; }
+    _critical { service[n] = srv; }
     return OK;
 }
 
