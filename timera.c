@@ -19,16 +19,15 @@ enum
     TA5,
     TA6,
     TA7,
-    TA_SIZE
 };
 
-static void (*ctx[TA_SIZE])();
+static void (*ctx[TA7 + 1])();
 
 ////////////////////////////////////////////////////////////////////////////////
 static void isr_tima() _critical _interrupt
 {
     byte cs = TACSR >> 1;
-    for (byte n = TA1; n <= TA7; ++n, cs >>= 1) if ((cs & 1) && ctx[n]) ctx[n]();
+    for (byte n = TA1; n <= TA7; ++n, cs >>= 1) if (cs & 1) ctx[n]();
 }
 
 void tima_init() _sdcccall
@@ -42,10 +41,12 @@ void tima_init() _sdcccall
 
 static void tima_proc(byte n, void *proc) _sdcccall
 {
-    ctx[n] = proc;
-
-    byte m = 1 << n;
-    TACSR = (TACSS = proc ? TACSS | m : TACSS & ~m);
+    if (proc)
+    {
+        ctx[n] = proc;
+        TACSR = (TACSS |= (1 << n));
+    }
+    else TACSR = (TACSS &= ~(1 << n));
 }
 
 #pragma restore
