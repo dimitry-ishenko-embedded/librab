@@ -123,19 +123,19 @@ enum // GCDR
 
 enum // MBxCR
 {
-    MEM_BANK_CS0 = 0x00,
-    MEM_BANK_CS1 = 0x01,
-    MEM_BANK_CS2 = 0x02,
+    MB_CS0 = 0x00,
+    MB_CS1 = 0x01,
+    MB_CS2 = 0x02,
 
-    MEM_BANK_OE0_WE0 = 0x00,
-    MEM_BANK_OE1_WE1 = 0x04,
-    MEM_BANK_OE0 = 0x08,
-    MEM_BANK_OE1 = 0x0c,
+    MB_OE0_WE0 = 0x00,
+    MB_OE1_WE1 = 0x04,
+    MB_OE0 = 0x08,
+    MB_OE1 = 0x0c,
 
-    MEM_BANK_4WS = 0x00,
-    MEM_BANK_2WS = 0x40,
-    MEM_BANK_1WS = 0x80,
-    MEM_BANK_0WS = 0xc0,
+    MB_4WS = 0x00,
+    MB_2WS = 0x40,
+    MB_1WS = 0x80,
+    MB_0WS = 0xc0,
 };
 
 enum // SPCR

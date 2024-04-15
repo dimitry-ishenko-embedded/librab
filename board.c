@@ -112,8 +112,8 @@ void board_init() _sdcccall
     SPCR = SMODE_DISABLE;
 
     // fast Flash & RAM
-    MB0CR = MEM_BANK_0WS | MEM_BANK_OE0     | MEM_BANK_CS0;
-    MB2CR = MEM_BANK_0WS | MEM_BANK_OE1_WE1 | MEM_BANK_CS1;
+    MB0CR = MB_0WS | MB_OE0     | MB_CS0;
+    MB2CR = MB_0WS | MB_OE1_WE1 | MB_CS1;
 
     // run at max speed
     GCSR = GCSS = CPU_MAIN_CLOCK;
