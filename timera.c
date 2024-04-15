@@ -39,14 +39,19 @@ int tima_service(byte n, void *srv) _sdcccall
 #pragma restore
 
 ////////////////////////////////////////////////////////////////////////////////
-static word TATxR[] = { 0, _TAT1R, _TAT2R, _TAT3R, _TAT4R, _TAT5R, _TAT6R, _TAT7R };
-
 int tima_count(byte n, byte c) _sdcccall
 {
-    if (n < TIMERA1 || n > TIMERA7) return FAIL;
-
-    reg_write(TATxR[n], c);
-    return OK;
+    switch (n)
+    {
+    case TIMERA1: TAT1R = c; return OK;
+    case TIMERA2: TAT2R = c; return OK;
+    case TIMERA3: TAT3R = c; return OK;
+    case TIMERA4: TAT4R = c; return OK;
+    case TIMERA5: TAT5R = c; return OK;
+    case TIMERA6: TAT6R = c; return OK;
+    case TIMERA7: TAT7R = c; return OK;
+    }
+    return FAIL;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
