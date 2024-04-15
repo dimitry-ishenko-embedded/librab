@@ -235,18 +235,18 @@ enum // SACR
 {
     SA_8BIT = 0x00,
 
-    SA_PC_IN = 0x00,
-    SA_PD_IN = 0x01,
-    SA_DISABLE_IN = 0x10,
+    SA_IN_PC = 0x00,
+    SA_IN_PD = 0x01,
+    SA_IN_DISABLE = 0x10,
 };
 
 enum // SBCR
 {
     SB_8BIT = 0x00,
 
-    SB_PC_IN = 0x00,
-    SB_PD_IN = 0x01,
-    SB_DISABLE_IN = 0x10,
+    SB_IN_PC = 0x00,
+    SB_IN_PD = 0x01,
+    SB_IN_DISABLE = 0x10,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
