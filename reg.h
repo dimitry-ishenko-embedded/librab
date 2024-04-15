@@ -130,21 +130,6 @@ enum // PBDDR
     PORTB_PIN0_7_OUTPUT = 0xff,
 };
 
-enum // PCDR
-{
-    TXD = 0,
-    RXD = 1,
-
-    TXC = 2,
-    RXC = 3,
-
-    TXB = 4,
-    RXB = 5,
-
-    TXA = 6,
-    RXA = 7,
-};
-
 enum // PCFR
 {
     PORTC_PIN0_TXD = 0x01,
