@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "reg.h"
 
+byte TACSRW, TAPRW, TACRW;
+
 #pragma save
 #pragma disable_warning 59
 #pragma disable_warning 85

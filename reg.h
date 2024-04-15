@@ -33,6 +33,8 @@ reg(0x0047, PBDDR)
 reg(0x0050, PCDR )
 reg(0x0055, PCFR )
 
+extern byte TACSRW, TAPRW, TACRW; // shadow registers
+
 reg(0x00a0, TACSR)
 reg(0x00a1, TAPR )
 reg(0x00a3, TAT1R)
