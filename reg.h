@@ -81,13 +81,16 @@ void reg_write(word n, byte d) _sdcccall;
 byte reg_read(word n) _sdcccall;
 
 ////////////////////////////////////////////////////////////////////////////////
+enum // common interrupt priorities
+{
+    INT_NMASK = 0xfc,
+    INT_PRIO1 = 0x01,
+    INT_PRIO2 = 0x02,
+    INT_PRIO3 = 0x03,
+};
+
 enum // GCSR
 {
-    PERIODIC_INT_DISABLE = 0x00,
-    PERIODIC_INT_PRIO1 = 0x01,
-    PERIODIC_INT_PRIO2 = 0x02,
-    PERIODIC_INT_PRIO3 = 0x03,
-
     SPEED_MAIN_CLOCK = 0x08,
     SPEED_MAIN_CLOCK_DIV2 = 0x0c,
     SPEED_MAIN_CLOCK_DIV4 = 0x18,
@@ -146,7 +149,6 @@ enum // TACSR
 {
     TIMERA_CLOCK_ENABLE = 0x01,
 
-    TIMERAx_INT_DISABLE = 0x00,
     TIMERA1_INT_ENABLE = 0x02,
     TIMERA2_INT_ENABLE = 0x04,
     TIMERA3_INT_ENABLE = 0x08,
@@ -164,11 +166,6 @@ enum // TAPR
 
 enum // TACR
 {
-    TIMERA_INT_DISABLE = 0x00,
-    TIMERA_INT_PRIO1 = 0x01,
-    TIMERA_INT_PRIO2 = 0x02,
-    TIMERA_INT_PRIO3 = 0x03,
-
     TIMERAx_CLOCK_MAIN = 0x00,
     TIMERA2_CLOCK_A1 = 0x04,
     TIMERA3_CLOCK_A1 = 0x08,
@@ -180,11 +177,6 @@ enum // TACR
 
 enum // SACR
 {
-    SERIALA_INT_DISABLE = 0x00,
-    SERIALA_INT_PRIO1 = 0x01,
-    SERIALA_INT_PRIO2 = 0x02,
-    SERIALA_INT_PRIO3 = 0x03,
-
     SERIALA_MODE_8BIT = 0x00,
 
     SERIALA_PORTC_IN = 0x00,
@@ -194,11 +186,6 @@ enum // SACR
 
 enum // SBCR
 {
-    SERIALB_INT_DISABLE = 0x00,
-    SERIALB_INT_PRIO1 = 0x01,
-    SERIALB_INT_PRIO2 = 0x02,
-    SERIALB_INT_PRIO3 = 0x03,
-
     SERIALB_MODE_8BIT = 0x00,
 
     SERIALB_PORTC_IN = 0x00,

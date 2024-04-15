@@ -190,7 +190,7 @@ int sera_open(dword baud) _sdcccall
 
     ivt_intern_isr(INT_SERIALA, &isr_sera);
 
-    SACR = SERIALA_PORTC_IN | SERIALA_MODE_8BIT | SERIALA_INT_PRIO1;
+    SACR = SERIALA_PORTC_IN | SERIALA_MODE_8BIT | INT_PRIO1;
     TAT4R = div;
 
     return OK;
@@ -215,7 +215,7 @@ int serb_open(dword baud) _sdcccall
 
     ivt_intern_isr(INT_SERIALB, &isr_serb);
 
-    SBCR = SERIALB_PORTC_IN | SERIALB_MODE_8BIT | SERIALB_INT_PRIO1;
+    SBCR = SERIALB_PORTC_IN | SERIALB_MODE_8BIT | INT_PRIO1;
     TAT5R = div;
 
     return OK;
