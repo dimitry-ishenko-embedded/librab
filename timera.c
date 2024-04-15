@@ -10,13 +10,25 @@
 #include "timera.h"
 
 ////////////////////////////////////////////////////////////////////////////////
-static void (*service[TIMERA7 + 1])();
+enum
+{
+    TA1 = 1,
+    TA2,
+    TA3,
+    TA4,
+    TA5,
+    TA6,
+    TA7,
+    TA_SIZE
+};
 
+static void (*ctx[TA_SIZE])();
+
+////////////////////////////////////////////////////////////////////////////////
 static void isr_tima() _critical _interrupt
 {
     byte cs = TACSR >> 1;
-    for (byte n = TIMERA1; n <= TIMERA7; ++n, cs >>= 1)
-        if ((cs & 1) && service[n]) service[n]();
+    for (byte n = TA1; n <= TA7; ++n, cs >>= 1) if ((cs & 1) && ctx[n]) ctx[n]();
 }
 
 void tima_init() _sdcccall
@@ -25,26 +37,23 @@ void tima_init() _sdcccall
     TACR = (TACS |= INT_PRIO1);
 }
 
-////////////////////////////////////////////////////////////////////////////////
 #pragma save
 #pragma disable_warning 244
 
-int tima_service(byte n, void *srv) _sdcccall
+static void tima_proc(byte n, void *proc) _sdcccall
 {
-    if (n < TIMERA1 || n > TIMERA7) return FAIL;
+    ctx[n] = proc;
 
-    _critical { service[n] = srv; }
-    return OK;
+    byte m = 1 << n;
+    TACSR = (TACSS = proc ? TACSS | m : TACSS & ~m);
 }
 
 #pragma restore
 
-////////////////////////////////////////////////////////////////////////////////
-int tima_enable(byte n, bool b) _sdcccall
-{
-    if (n < TIMERA1 || n > TIMERA7) return FAIL;
-
-    byte m = 1 << (n - TIMERA1 + 1);
-    TACSR = TACSS = b ? TACSS | m : TACSS & ~m;
-    return OK;
-}
+void tima1_proc(void *proc) _sdcccall { tima_proc(TA1, proc); }
+void tima2_proc(void *proc) _sdcccall { tima_proc(TA2, proc); }
+void tima3_proc(void *proc) _sdcccall { tima_proc(TA3, proc); }
+void tima4_proc(void *proc) _sdcccall { tima_proc(TA4, proc); }
+void tima5_proc(void *proc) _sdcccall { tima_proc(TA5, proc); }
+void tima6_proc(void *proc) _sdcccall { tima_proc(TA6, proc); }
+void tima7_proc(void *proc) _sdcccall { tima_proc(TA7, proc); }

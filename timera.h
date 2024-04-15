@@ -10,20 +10,14 @@
 
 #include "types.h"
 
-enum
-{
-    TIMERA1 = 1,
-    TIMERA2,
-    TIMERA3,
-    TIMERA4,
-    TIMERA5,
-    TIMERA6,
-    TIMERA7,
-};
-
 void tima_init() _sdcccall;
-int  tima_service(byte n, void *srv) _sdcccall;
-int  tima_enable(byte n, bool b) _sdcccall;
+void tima1_proc(void *proc) _sdcccall;
+void tima2_proc(void *proc) _sdcccall;
+void tima3_proc(void *proc) _sdcccall;
+void tima4_proc(void *proc) _sdcccall;
+void tima5_proc(void *proc) _sdcccall;
+void tima6_proc(void *proc) _sdcccall;
+void tima7_proc(void *proc) _sdcccall;
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
