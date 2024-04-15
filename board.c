@@ -104,9 +104,9 @@ void board_init() _sdcccall
 {
     // IMPORTANT:
     // This function is run before main() and any global variables set here
-    // will be overwritten by gsinit(). Therefore, all variables used here must
-    // be located in the uninitialized space (0xdf00 - above the extern IVT)
-    // and (optionally) initialized manually.
+    // will be overwritten by gsinit() inside crt0.
+    // Therefore, all variables used here must be located in the un-initialized
+    // space (0xdf00 - 0xdfff) and initialized manually.
 
     // no bootstrap
     SPCR = SMODE_DISABLE;
