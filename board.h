@@ -11,10 +11,10 @@
 #include "types.h"
 
 // milli-second counter (overflows every ~65 sec)
-extern word msec_count;
+extern word _at (0xdff8) msec_count;
 
 // divisor for 19200 baud
-extern byte _at (0xdf00) div_19200;
+extern byte _at (0xdffa) div_19200;
 
 void board_init() _sdcccall;
 void sleep(word msec) _sdcccall;

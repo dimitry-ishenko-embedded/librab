@@ -9,14 +9,16 @@
 #include "ivt.h"
 #include "reg.h"
 
+////////////////////////////////////////////////////////////////////////////////
 // milli-second counter (overflows every ~65 sec)
-word msec_count = 0;
+word _at (0xdff8) msec_count;
 
 // divisor for 19200 baud
-byte _at (0xdf00) div_19200;
+byte _at (0xdffa) div_19200;
 
 ////////////////////////////////////////////////////////////////////////////////
-static byte tic = 0, toc = 0;
+static byte _at (0xdffb) tic;
+static byte _at (0xdffc) toc;
 
 static void isr_periodic() _naked
 {
@@ -100,6 +102,12 @@ _endasm;
 ////////////////////////////////////////////////////////////////////////////////
 void board_init() _sdcccall
 {
+    // IMPORTANT:
+    // This function is run before main() and any global variables set here
+    // will be overwritten by gsinit(). Therefore, all variables used here must
+    // be located in the uninitialized space (0xdf00 - above the extern IVT)
+    // and (optionally) initialized manually.
+
     // no bootstrap
     SPCR = SMODE_DISABLE;
 
@@ -123,6 +131,7 @@ void board_init() _sdcccall
     TACR  = TACS  = TIMERAx_CLOCK_MAIN;
     TACSR = TACSS = TIMERA_CLOCK_ENABLE;
 
+    tic = toc = msec_count = 0;
     ivt_intern_isr(INT_PERIODIC, &isr_periodic);
     GCSR = SPEED_MAIN_CLOCK | INT_PRIO3;
 
