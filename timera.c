@@ -40,22 +40,6 @@ int tima_service(byte n, void *srv) _sdcccall
 #pragma restore
 
 ////////////////////////////////////////////////////////////////////////////////
-int tima_count(byte n, byte c) _sdcccall
-{
-    switch (n)
-    {
-    case TIMERA1: TAT1R = c; return OK;
-    case TIMERA2: TAT2R = c; return OK;
-    case TIMERA3: TAT3R = c; return OK;
-    case TIMERA4: TAT4R = c; return OK;
-    case TIMERA5: TAT5R = c; return OK;
-    case TIMERA6: TAT6R = c; return OK;
-    case TIMERA7: TAT7R = c; return OK;
-    }
-    return FAIL;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 int tima_clock_a1(byte n, bool b) _sdcccall
 {
     if (n < TIMERA2 || n > TIMERA7) return FAIL;
