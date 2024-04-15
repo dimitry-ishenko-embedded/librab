@@ -89,6 +89,8 @@ reg(0x00f4, SDCR )
 reg(0x00f5, SDER )
 
 // shadow registers
+extern byte _at (0xdf00) GCSS;
+
 extern byte _at (0xdfa0) TACSS;
 extern byte _at (0xdfa1) TAPS;
 extern byte _at (0xdfa4) TACS;
