@@ -19,7 +19,7 @@ static void isr_timera() _critical _interrupt
     for (byte n = 1, b = 2; n < 8; ++n, b <<= 1) if ((rs & b) && tima_isr[n]) tima_isr[n]();
 }
 
-void timera_init()
+void timera_init() _sdcccall
 {
     ivt_intern_isr(INT_TIMERA, isr_timera);
     TACR = (TACRW |= INT_PRIO2);
@@ -29,7 +29,7 @@ void timera_init()
 #pragma save
 #pragma disable_warning 244
 
-int timera_isr(byte n, void *isr)
+int timera_isr(byte n, void *isr) _sdcccall
 {
     if (n < TIMERA1 || n > TIMERA7) return FAIL;
 

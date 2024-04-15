@@ -21,8 +21,8 @@ enum
     TIMERA7,
 };
 
-void timera_init();
-int timera_isr(byte n, void *isr);
+void timera_init() _sdcccall;
+int timera_isr(byte n, void *isr) _sdcccall;
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
